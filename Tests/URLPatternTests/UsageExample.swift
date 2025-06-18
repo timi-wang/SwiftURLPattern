@@ -141,11 +141,11 @@ struct UsageExample {
   @Test
   func stringifyPatterns() throws {
     var pattern = try! URLPattern("/api/users/:id")
-    #expect(try! pattern.stringify(["id": 10]) == "/api/users/10")
+    #expect(pattern.stringify(["id": 10]) == "/api/users/10")
 
     pattern = try! URLPattern("/api/users(/:id)")
-    #expect(try! pattern.stringify() == "/api/users")
-    #expect(try! pattern.stringify(["id": 10]) == "/api/users/10")
+    #expect(pattern.stringify() == "/api/users")
+    #expect(pattern.stringify(["id": 10]) == "/api/users/10")
   }
 
   @Test

@@ -146,7 +146,6 @@ struct MatchFixturesTests {
       ":scheme\\://:host(\\::port)(/api(/:resource(/:id)))",
       ParserOptions(segmentValueCharset: "a-zA-Z0-9-_~ %.@")
     )
-    print(pattern.regex.pattern, pattern.names)
     #expect(
       dictEqual(pattern.match("https://sss.www.localhost.com"), ["scheme": "https", "host": "sss.www.localhost.com"])
     )

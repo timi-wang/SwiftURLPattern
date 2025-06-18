@@ -6,7 +6,7 @@ The pure swift version of url-pattern, easy way to match urls and other strings.
 
 ``` swift
 // create pattern with string
-let pattern = UrlPattern("/api/users(/:id)")
+let pattern = try UrlPattern("/api/users(/:id)")
 
 // match pattern against string and extract values
 pattern.match("/api/users/10") // ["id": "10"]
@@ -23,12 +23,13 @@ More complecate usages can check the **UsageExample** test file
 ## Make pattern from string
 
 ```swift
-let pattern = UrlPattern("/api/users/:id");
+let pattern = try UrlPattern("/api/users/:id");
 ```
 
 a `pattern` is immutable after construction.
 none of its methods changes its state.
 that makes it easier to reason about.
+if the pattern cannot be parsed, an error will be thrown
 
 ## Match pattern against string
 
@@ -64,7 +65,7 @@ and you want to match them all, you can use the `pattern.matchAll` function,
 it will return an array with all matched results.
     
 ```swift
-let pattern = UrlPattern("/api/users/:ids/posts/:ids")
+let pattern = try UrlPattern("/api/users/:ids/posts/:ids")
 pattern.matchAll("/api/users/10/posts/5") // ["ids": ["10", "5"]]
 ```
 
@@ -73,9 +74,9 @@ pattern.matchAll("/api/users/10/posts/5") // ["ids": ["10", "5"]]
 to make part of a pattern optional just wrap it in `(` and `)`:
 
 ```swift
-let pattern = UrlPattern(
+let pattern = try UrlPattern(
   "(http(s)\\://)(:subdomain.):domain.:tld(/*)"
-);
+)
 ```
 
 note that `\\` escapes the `:` in `http(s)\\://`.
@@ -109,7 +110,7 @@ if there is more than one wildcard use matchAll to make `_` contains an array of
 ## Make pattern from regex
 
 ```swift
-let pattern = UrlPattern(regex: "^\/api\/(.*)$");
+let pattern = try UrlPattern(regex: "^\/api\/(.*)$");
 ```
 
 if the pattern was created from a regex, a dict of the captured groups is returned with a key of the group index starts from "1"
@@ -124,7 +125,7 @@ you can pass an array of keys as the second argument.
 returns dict on match with each key mapped to a captured value:
 
 ```swift
-let pattern = UrlPattern(
+let pattern = try UrlPattern(
   regex: "^\/api\/([^\/]+)(?:\/(\d+))?$",
   ["resource", "id"]
 )
@@ -137,7 +138,7 @@ pattern.match("/api/users/foo") // nil
 ## Stringify patterns
 
 ```swift
-let pattern = UrlPattern("/api/users/:id")
+let pattern = try UrlPattern("/api/users/:id")
 
 pattern.stringify(["id": 10])
 // "/api/users/10"
@@ -147,7 +148,7 @@ optional segments are only included in the output if they contain named segments
 and/or wildcards and values for those are provided:
 
 ```swift
-let pattern = UrlPattern("/api/users(/:id)")
+let pattern = try UrlPattern("/api/users(/:id)")
 
 pattern.stringify() // "/api/users"
 pattern.stringify(["id": 10]) // "/api/users/10"
@@ -213,7 +214,7 @@ options.wildcardChar = "?"
 pass options as the second argument to the constructor:
 
 ```swift
-let pattern = UrlPattern(
+let pattern = try UrlPattern(
   "[http[s]!://][$sub_domain.]$domain.$toplevel-domain[/?]",
   options
 )
