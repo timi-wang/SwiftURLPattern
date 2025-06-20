@@ -3,8 +3,8 @@ import Foundation
 
 public class URLPattern {
   let ast: TagValueType?
-  let regex: NSRegularExpression
-  let names: [String]
+  public let regex: NSRegularExpression
+  public let names: [String]
   
   public init(_ pattern: URLPattern) {
     self.names = pattern.names

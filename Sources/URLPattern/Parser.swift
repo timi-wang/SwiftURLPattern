@@ -185,13 +185,13 @@ enum P {
 }
 
 public struct ParserOptions {
-  var escapeChar: String
-  var segmentNameStartChar: String
-  var segmentValueCharset: String
-  var segmentNameCharset: String
-  var optionalSegmentStartChar: String
-  var optionalSegmentEndChar: String
-  var wildcardChar: String
+  public var escapeChar: String
+  public var segmentNameStartChar: String
+  public var segmentValueCharset: String
+  public var segmentNameCharset: String
+  public var optionalSegmentStartChar: String
+  public var optionalSegmentEndChar: String
+  public var wildcardChar: String
   
   public init(
     escapeChar: String = "\\",
